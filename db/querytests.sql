@@ -1,0 +1,2 @@
+-- View All Departments
+-- SELECT * FROM department;
