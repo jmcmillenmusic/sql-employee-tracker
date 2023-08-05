@@ -56,6 +56,52 @@ function viewAllEmployees() {
   });
 };
 
+// db.query function to add a department
+function addDepartment() {
+  // Requires the name of the new deparment to be passed into the prepared statement
+  const newDeptName = 'Human Resources';
+  db.query(`INSERT INTO department (name)
+  VALUES ("${newDeptName}")`, function (err) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(`${newDeptName} Department Added!`);
+    }
+  });
+  db.query('SELECT * FROM department', function (err, results) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(results);
+    }
+  });
+};
+
+// db.query function to add a role
+function addRole() {
+  // Requires the name of the new role, its salary, and its department_id to be passed into the prepared statement
+  const newRole = {
+    title: 'HR Specialist',
+    salary: 42500,
+    department_id: 4
+  };
+  db.query(`INSERT INTO role (title, salary, department_id)
+  VALUES ("${newRole.title}", ${newRole.salary}, ${newRole.department_id})`, function (err) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(`${newRole.title} Role Added!`);
+    }
+  });
+  db.query('SELECT role.id AS ID, role.title AS Title, role.salary AS Salary, department.name AS Dept_Name FROM role JOIN department ON role.department_id = department.id', function (err, results) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(results);
+    }
+  });
+};
+
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
