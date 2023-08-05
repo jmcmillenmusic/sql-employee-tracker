@@ -131,9 +131,9 @@ function addEmployee() {
   });
 };
 
-// db.query function to add an employee
+// db.query function to update an employee's role
 function updateEmployeeRole() {
-  // Requires the new employee's first name, last name, role_id, and manager_id to be passed into the prepared statement
+  // Requires the updated employee's new role_id and id to be passed into the prepared statement
   const updateEmpRole = {
     role_id: 2,
     id: 7
