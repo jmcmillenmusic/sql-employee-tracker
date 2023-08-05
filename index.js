@@ -16,7 +16,24 @@ const dbActions = [
 function init() {
     inquirer.prompt(dbActions)
       .then(function(answers) {
-        console.log(answers);
+        switch(answers.actions) {
+            case "View All Departments":
+                viewAllDepartments();
+                setTimeout(init, 1000);
+                break;
+            case "View All Roles":
+                viewAllRoles();
+                setTimeout(init, 1000);
+                break;
+            case "View All Employees":
+                viewAllEmployees();
+                setTimeout(init, 1000);
+                break;
+            default:
+                console.log("Error");
+                setTimeout(init, 1000);
+                break;
+        }
     });
 }
 
