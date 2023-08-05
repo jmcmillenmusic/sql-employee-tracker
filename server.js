@@ -23,6 +23,17 @@ const db = mysql.createConnection(
     console.log(`You are connected to the employee_db database!`)
 );
 
+// db.query function to view all departments
+function viewAllDepartments() {
+  db.query('SELECT * FROM department', function (err, results) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(results);
+    }
+  });
+};
+
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
