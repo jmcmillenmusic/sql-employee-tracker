@@ -102,6 +102,58 @@ function addRole() {
   });
 };
 
+// db.query function to add an employee
+function addEmployee() {
+  // Requires the new employee's first name, last name, role_id, and manager_id to be passed into the prepared statement
+  const newEmployee = {
+    first_name: 'Gina',
+    last_name: 'Tribbiani',
+    role_id: 7,
+    manager_id: null
+  };
+  if (newEmployee.manager_id = null) {
+    newEmployee.manager_id = 'NULL';
+  }
+  db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id)
+  VALUES ("${newEmployee.first_name}", "${newEmployee.last_name}", ${newEmployee.role_id}, ${newEmployee.manager_id})`, function (err) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(`${newEmployee.first_name} ${newEmployee.last_name} has been hired!`);
+    }
+  });
+  db.query('SELECT employee.id AS id, employee.first_name AS First_Name, employee.last_name AS Last_Name, role.title AS Title, CONCAT(manager.first_name, " ", manager.last_name) AS Manager FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN employee manager ON employee.manager_id = manager.id AND CASE WHEN employee.id != manager.id THEN true ELSE false END', function (err, results) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(results);
+    }
+  });
+};
+
+// db.query function to add an employee
+function updateEmployeeRole() {
+  // Requires the new employee's first name, last name, role_id, and manager_id to be passed into the prepared statement
+  const updateEmpRole = {
+    role_id: 2,
+    id: 7
+  };
+  db.query(`UPDATE employee SET role_id = ${updateEmpRole.role_id} WHERE id = ${updateEmpRole.id}`, function (err) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('Someone got a new role!');
+    }
+  });
+  db.query('SELECT employee.id AS id, employee.first_name AS First_Name, employee.last_name AS Last_Name, role.title AS Title FROM employee LEFT JOIN role ON employee.role_id = role.id', function (err, results) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(results);
+    }
+  });
+};
+
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
