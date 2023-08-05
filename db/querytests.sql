@@ -34,9 +34,9 @@
 -- LEFT JOIN employee manager ON employee.manager_id = manager.id AND CASE WHEN employee.id != manager.id THEN true ELSE false END;
 
 -- Update an Employee's Role
-UPDATE employee
-SET role_id = 2
-WHERE id = 7;
-SELECT employee.id AS id, employee.first_name AS First_Name, employee.last_name AS Last_Name, role.title AS Title
-FROM employee
-LEFT JOIN role ON employee.role_id = role.id;
+-- UPDATE employee
+-- SET role_id = 2
+-- WHERE id = 7;
+-- SELECT employee.id AS id, employee.first_name AS First_Name, employee.last_name AS Last_Name, role.title AS Title
+-- FROM employee
+-- LEFT JOIN role ON employee.role_id = role.id;
