@@ -57,9 +57,8 @@ function viewAllEmployees() {
 };
 
 // db.query function to add a department
-function addDepartment() {
+function addDepartment(newDeptName) {
   // Requires the name of the new deparment to be passed into the prepared statement
-  const newDeptName = 'Human Resources';
   db.query(`INSERT INTO department (name)
   VALUES ("${newDeptName}")`, function (err) {
     if (err) {

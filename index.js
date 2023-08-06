@@ -12,6 +12,15 @@ const dbActions = [
     }
 ];
 
+// Prompts for the user to enter information when they wish to add a role
+const addDeptAction = [
+    {
+        type: 'input',
+        message: 'Please enter a name for this new department.',
+        name: 'addDept'
+    }
+];
+
 // Runs the initialization function to start the prompt and execute the answers based on user input
 function init() {
     inquirer.prompt(dbActions)
@@ -28,6 +37,13 @@ function init() {
             case "View All Employees":
                 viewAllEmployees();
                 setTimeout(init, 1000);
+                break;
+            case "Add a Department":
+                inquirer.prompt(addDeptAction)
+                    .then(function(answers) {
+                        newDeptName = answers.addDept;
+                        addDepartment(newDeptName);
+                    });
                 break;
             default:
                 console.log("Error");
