@@ -1,6 +1,6 @@
 // Declares initial required variables and functions from server.js
 const inquirer = require('inquirer');
-const { viewAllDepartments, viewAllRoles, viewAllEmployees, addDepartment, addRole, addEmployee, updateEmployeeRole } = require('./server');
+const { viewAllDepartments, viewAllRoles, viewAllEmployees, addDepartment, addRole, addEmployee, updateEmployeeRole, deparmentOptions } = require('./server');
 
 // Object array with a list of options for the user to interact with the employee_db
 const dbActions = [
@@ -18,6 +18,31 @@ const addDeptAction = [
         type: 'input',
         message: 'Please enter a name for this new department.',
         name: 'addDept'
+    }
+];
+
+
+
+// Prompts for the user to enter information when they wish to add a role
+const addRoleAction1 = [
+    {
+        type: 'input',
+        message: 'Please enter a title for this new role.',
+        name: 'addTitle'
+    },
+    {
+        type: 'input',
+        message: 'Please enter a salary amount for this new role.',
+        name: 'addSalary'
+    }
+];
+
+const addRoleAction2 = [
+    {
+        type: 'list',
+        message: 'Please enter a salary amount for this new role.',
+        name: 'addDeptID',
+        choices: []
     }
 ];
 
@@ -43,8 +68,23 @@ function init() {
                     .then(function(answers) {
                         newDeptName = answers.addDept;
                         addDepartment(newDeptName);
-                    });
+                    })
+                    .then(() => {
+                        setTimeout(init, 1000);
+                    })
                 break;
+            // case "Add a Role":
+            //     inquirer.prompt(addRoleAction1)
+            //         .then(() => {
+            //             deparmentOptions();
+            //         })
+            //         .then(() => {
+            //             addRoleAction2;
+            //         })
+            //         .then(function(answers) {
+            //             console.log(answers);
+            //         });
+            //     break;
             default:
                 console.log("Error");
                 setTimeout(init, 1000);

@@ -76,14 +76,25 @@ function addDepartment(newDeptName) {
   });
 };
 
+// db.query function to populate list of departments so that the user can more easily choose their deparment for the new role in addRole()
+function deparmentOptions() {
+  db.query('SELECT * FROM department', function (err, results) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(results);
+    }
+  });
+};
+
 // db.query function to add a role
-function addRole() {
+function addRole(newRole) {
   // Requires the name of the new role, its salary, and its department_id to be passed into the prepared statement
-  const newRole = {
-    title: 'HR Specialist',
-    salary: 42500,
-    department_id: 4
-  };
+  // const newRole = {
+  //   title: 'HR Specialist',
+  //   salary: 42500,
+  //   department_id: 4
+  // };
   db.query(`INSERT INTO role (title, salary, department_id)
   VALUES ("${newRole.title}", ${newRole.salary}, ${newRole.department_id})`, function (err) {
     if (err) {
@@ -157,4 +168,4 @@ app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
 
-module.exports = { viewAllDepartments, viewAllRoles, viewAllEmployees, addDepartment, addRole, addEmployee, updateEmployeeRole };
+module.exports = { viewAllDepartments, viewAllRoles, viewAllEmployees, addDepartment, addRole, addEmployee, updateEmployeeRole, deparmentOptions };
