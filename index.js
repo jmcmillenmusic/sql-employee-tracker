@@ -21,8 +21,6 @@ const addDeptAction = [
     }
 ];
 
-
-
 // Prompts for the user to enter information when they wish to add a role
 const addRoleAction1 = [
     {
@@ -37,12 +35,14 @@ const addRoleAction1 = [
     }
 ];
 
+let currentDept = deparmentOptions.results;
+
 const addRoleAction2 = [
     {
         type: 'list',
         message: 'Please enter a salary amount for this new role.',
         name: 'addDeptID',
-        choices: []
+        choices: currentDept
     }
 ];
 
@@ -73,18 +73,18 @@ function init() {
                         setTimeout(init, 1000);
                     })
                 break;
-            // case "Add a Role":
-            //     inquirer.prompt(addRoleAction1)
-            //         .then(() => {
-            //             deparmentOptions();
-            //         })
-            //         .then(() => {
-            //             addRoleAction2;
-            //         })
-            //         .then(function(answers) {
-            //             console.log(answers);
-            //         });
-            //     break;
+            case "Add a Role":
+                inquirer.prompt(addRoleAction1)
+                    .then(() => {
+                        deparmentOptions();
+                    })
+                    .then(() => {
+                        addRoleAction2;
+                    })
+                    .then(function(answers) {
+                        console.log(answers);
+                    });
+                break;
             default:
                 console.log("Error");
                 setTimeout(init, 1000);
