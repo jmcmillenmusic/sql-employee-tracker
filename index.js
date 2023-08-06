@@ -89,6 +89,24 @@ function init() {
                         }
                     });
                     break;
+                case "Add an Employee":
+                    db.query('SELECT role.id AS ID, role.title AS Title FROM role', function (err, results) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            let roles = results.map(({ title, id }) => ({
+                                'value': id,
+                                'name': title
+                            }));
+                        }
+                    // db.query('SELECT employee.id AS id, CONCAT(manager.first_name, " ", manager.last_name) AS Manager FROM employee LEFT JOIN employee manager ON employee.manager_id = manager.id AND CASE WHEN employee.id != manager.id THEN true ELSE false END', function (err, results) {
+                    //     if (err) {
+                    //         console.log(err);
+                    //     } else {
+                    //         console.table(results);
+                    //     }
+                    });
+                    break;
                 default:
                     console.log("Error");
                     setTimeout(init, 1000);
