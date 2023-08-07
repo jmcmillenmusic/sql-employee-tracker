@@ -99,15 +99,6 @@ function addRole(newRole) {
 // db.query function to add an employee
 function addEmployee() {
   // Requires the new employee's first name, last name, role_id, and manager_id to be passed into the prepared statement
-  const newEmployee = {
-    first_name: 'Gina',
-    last_name: 'Tribbiani',
-    role_id: 7,
-    manager_id: null
-  };
-  if (newEmployee.manager_id = null) {
-    newEmployee.manager_id = 'NULL';
-  }
   db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id)
   VALUES ("${newEmployee.first_name}", "${newEmployee.last_name}", ${newEmployee.role_id}, ${newEmployee.manager_id})`, function (err) {
     if (err) {
