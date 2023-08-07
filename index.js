@@ -94,20 +94,61 @@ function init() {
                         if (err) {
                             console.log(err);
                         } else {
-                            // let roles = results.map(({ title, id }) => ({
-                            //     'value': id,
-                            //     'name': title
-                            // }));
-                            console.table(results);
+                            let roles = results.map(({ title, id }) => ({
+                                'value': id,
+                                'name': title
+                            }));
+                            inquirer.prompt([
+                                {
+                                    type: 'input',
+                                    message: 'Please enter the first name of the new employee.',
+                                    name: 'newFirstName'
+                                },
+                                {
+                                    type: 'input',
+                                    message: 'Please enter the last name of the new employee.',
+                                    name: 'newLastName'
+                                },
+                                {
+                                    type: 'list',
+                                    message: 'Please choose a role for this new employee.',
+                                    name: 'newRole',
+                                    choices: roles
+                                }
+                            ])
                         }
-                    db.query('SELECT employee.id AS id, CONCAT(manager.first_name, " ", manager.last_name) AS Manager FROM employee LEFT JOIN employee manager ON employee.manager_id = manager.id AND CASE WHEN employee.id != manager.id THEN true ELSE false END', function (err, results2) {
+                    db.query('SELECT employee.id AS ID, employee.first_name AS First_Name, employee.last_name AS Last_Name FROM employee WHERE manager_id IS NULL', function (err, results2) {
                         if (err) {
                             console.log(err);
                         } else {
-                            console.table(results2);
+                            let managers = results2.map(({ first_name, last_name, id }) => ({
+                                'value': id,
+                                'name': `${first_name} ${last_name}`
+                            }));
+                            managers.set('4', null);
+                            inquirer.prompt([
+                                {
+                                    type: 'list',
+                                    message: 'Please assign a manager to this new employee if they have one.',
+                                    name: 'newManager',
+                                    choices: managers
+                                }
+                            ])
+                                .then(function (answers) {
+                                    newEmployee = {
+                                        first_name: answers.newFirstName,
+                                        last_name: answers.newLastName,
+                                        role_id: answers.newRole,
+                                        manager_id: answers.newManager
+                                    };
+                                    addRole(newRole);
+                                })
+                                .then(() => {
+                                    setTimeout(init, 1000);
+                                })
                         }
                     })
-                });
+                    });
                     break;
                 default:
                     console.log("Error");
