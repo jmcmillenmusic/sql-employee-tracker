@@ -97,7 +97,7 @@ function addRole(newRole) {
 };
 
 // db.query function to add an employee
-function addEmployee() {
+function addEmployee(newEmployee) {
   // Requires the new employee's first name, last name, role_id, and manager_id to be passed into the prepared statement
   db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id)
   VALUES ("${newEmployee.first_name}", "${newEmployee.last_name}", ${newEmployee.role_id}, ${newEmployee.manager_id})`, function (err) {
@@ -117,12 +117,8 @@ function addEmployee() {
 };
 
 // db.query function to update an employee's role
-function updateEmployeeRole() {
+function updateEmployeeRole(updateEmpRole) {
   // Requires the updated employee's new role_id and id to be passed into the prepared statement
-  const updateEmpRole = {
-    role_id: 2,
-    id: 7
-  };
   db.query(`UPDATE employee SET role_id = ${updateEmpRole.role_id} WHERE id = ${updateEmpRole.id}`, function (err) {
     if (err) {
       console.log(err);

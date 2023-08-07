@@ -94,12 +94,10 @@ function init() {
                         if (err) {
                             console.log(err);
                         } else {
-                            // console.log("else hits", results);
                             let roles = results.map(({ Title, ID }) => ({
                                 'value': ID,
                                 'name': Title
                             }));
-                            // console.log(roles);
                             db.query('SELECT employee.id AS ID, employee.first_name AS First_Name, employee.last_name AS Last_Name FROM employee WHERE manager_id IS NULL', function (err, results2) {
                                 if (err) {
                                     console.log(err);
@@ -108,7 +106,6 @@ function init() {
                                         'value': ID,
                                         'name': `${First_Name} ${Last_Name}`
                                     }));
-                                    // managers.set('4', null);
                                     inquirer.prompt([
                                         {
                                             type: 'input',
@@ -133,7 +130,7 @@ function init() {
                                             choices: managers
                                         }
                                     ])
-                                    .then(function (answers) {
+                                        .then(function (answers) {
                                             newEmployee = {
                                                 first_name: answers.newFirstName,
                                                 last_name: answers.newLastName,
@@ -148,62 +145,62 @@ function init() {
                                 }
                             }
                             )
-                            
-                            // .then(db.query('SELECT employee.id AS ID, employee.first_name AS First_Name, employee.last_name AS Last_Name FROM employee WHERE manager_id IS NULL', function (err, results2) {
-                            //         if (err) {
-                            //             console.log(err);
-                            //         } else {
-                            //             let managers = results2.map(({ first_name, last_name, id }) => ({
-                            //                 'value': id,
-                            //                 'name': `${first_name} ${last_name}`
-                            //             }));
-                            //             managers.set('4', null);
-                            //         }
-                            //     }
-                            // ))
-                        }})
-                        break;
-                    default:
-                        console.log("Error");
-                        setTimeout(init, 1000);
-                        break;
-                    }});
-                    // db.query('SELECT employee.id AS ID, employee.first_name AS First_Name, employee.last_name AS Last_Name FROM employee WHERE manager_id IS NULL', function (err, results2) {
-                    //     if (err) {
-                    //         console.log(err);
-                    //     } else {
-                    //         let managers = results2.map(({ first_name, last_name, id }) => ({
-                    //             'value': id,
-                    //             'name': `${first_name} ${last_name}`
-                    //         }));
-                    //         managers.set('4', null);
-                    //         inquirer.prompt([
-                    //             {
-                    //                 type: 'list',
-                    //                 message: 'Please assign a manager to this new employee if they have one.',
-                    //                 name: 'newManager',
-                    //                 choices: managers
-                    //             }
-                    //         ])
-                    //             .then(function (answers) {
-                    //                 newEmployee = {
-                    //                     first_name: answers.newFirstName,
-                    //                     last_name: answers.newLastName,
-                    //                     role_id: answers.newRole,
-                    //                     manager_id: answers.newManager
-                    //                 };
-                    //                 addRole(newRole);
-                    //             })
-                    //             .then(() => {
-                    //                 setTimeout(init, 1000);
-                    //             })
-                    //     }
-                    // })
-                    // });
-        
-                }
-        // });
-// }
+                        }
+                    })
+                    break;
+                case "Update an Employee's Role":
+                    db.query('SELECT employee.id AS ID, employee.first_name AS First_Name, employee.last_name AS Last_Name FROM employee', function (err, results) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            let empList = results.map(({ First_Name, Last_Name, ID }) => ({
+                                'value': ID,
+                                'name': `${First_Name} ${Last_Name}`
+                            }));
+                            db.query('SELECT role.id AS ID, role.title AS Title FROM role', function (err, results2) {
+                                if (err) {
+                                    console.log(err);
+                                } else {
+                                    let roleList = results2.map(({ Title, ID }) => ({
+                                        'value': ID,
+                                        'name': Title
+                                    }));
+                                    inquirer.prompt([
+                                        {
+                                            type: 'list',
+                                            message: 'Please select an employee to grant a new position.',
+                                            name: 'shiftedEmp',
+                                            choices: empList
+                                        },
+                                        {
+                                            type: 'list',
+                                            message: 'Please choose a new role for this employee.',
+                                            name: 'grantedRole',
+                                            choices: roleList
+                                        }
+                                    ])
+                                        .then(function (answers) {
+                                            updateEmpRole = {
+                                                role_id: answers.grantedRole,
+                                                id: answers.shiftedEmp,
+                                            };
+                                            updateEmployeeRole(updateEmpRole);
+                                        })
+                                        .then(() => {
+                                            setTimeout(init, 1000);
+                                        })
+                                }
+                            })
+                        }
+                    })
+                    break;
+                default:
+                    console.log("Error");
+                    setTimeout(init, 1000);
+                    break;
+            }
+        });
+}
 
 // Function call to initialize app after server.js finishes connecting to the database and showing which port it's running on
 setTimeout(init, 1000);
