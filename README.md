@@ -6,7 +6,7 @@ As a web developer, I need to be able to work with actual databases. While JSON 
 
 ## Installation
 
-To access the README Generator, you'll need to clone the repo at the link below:
+To access the SQL Employee Tracker, you'll need to clone the repo at the link below:
 https://github.com/jmcmillenmusic/sql-employee-tracker
 You'll need to make sure that you also have Inquirer v.8.2.4, the MySQL Node package, and Express by running the following commands in the terminal:
 `npm i install@8.2.4`
