@@ -23,6 +23,8 @@ Then, select any of the queries on the list to view departments, roles, and empl
 You can watch this video to see the employee tracker in action:
 https://drive.google.com/file/d/1wBqHTbU_OT9BV9N-uxr-OO60P_fpbp2U/view
 
+![screenshot](./screenshot.PNG)
+
 ## Credits
 
 N/A
